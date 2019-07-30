@@ -1,4 +1,4 @@
-Chinese syllables audiotester
+Chinese HSK1 words+audio tester
 Makarov Edgar(c) 2019
 
 Для работы надо установить python3 (см гугл) и модуль pygame:
