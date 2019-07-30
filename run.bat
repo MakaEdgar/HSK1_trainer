@@ -1,1 +1,1 @@
-python hsk1_test.py
+python hsk1_trainer.py
