@@ -89,7 +89,7 @@ shàng	上	on
 shāng diàn	商店	store; shop; CL:家[jia1] ,个[ge4]
 shàng wǔ	上午	morning; CL:个[ge4]
 shǎo	少	few; little; lack
-shéi	谁	who; also pronounced shui2
+shuí	谁	who
 shén me	什么	what?; who?; something; anything
 shí	十	ten; 10
 shì	是	to be; yes
@@ -97,7 +97,7 @@ shí hou	时候	time; length of time; moment; period
 shū	书	book; letter; CL:本[ben3] ,册[ce4] ,部[bu4]; see also Book of History
 shuǐ	水	water; river; liquid; beverage
 shuì jiào	睡觉	to go to bed; to go to sleep
-shuǐguǒ	水果	fruit
+shuǐ guǒ	水果	fruit
 shuō	说	to speak; to say; to explain; to scold; to tell off; a theory (usually in compounds such as 日心说 heliocentric theory);
 sì	四	four; 4
 suì	岁	classifier for years (of age); year; year (of crop harvests)
