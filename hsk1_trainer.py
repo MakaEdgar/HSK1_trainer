@@ -1,7 +1,8 @@
 AUDIO_FOLDER = "./HSK1_words/"
 DICT_FILE = "HSK1_dict.txt"
 PLAY_BEFORE_INPUT = True
-NOT_PENALIZE_AFTER_REPEAT_AUDIO = True
+NUMBER_OF_WORDS = -1
+#NOT_PENALIZE_AFTER_REPEAT_AUDIO = True
 
 from pygame import mixer # Load the required library
 from os import system
@@ -14,11 +15,13 @@ def print_statictics():
         if wrong_ans == 0:
             percents = 100
         else:
-            percents = int(100*(right_ans - wrong_ans) / (right_ans + wrong_ans))
+            percents = int(100*(right_ans_1_try) / (right_ans + wrong_ans))
     else:
         percents = 0
     print("Right:", right_ans, "Wrong:", wrong_ans,
-          "Percents:", percents, "Correct:", right_ans_1_try,
+          "Percents:", percents,
+          "Correct:", right_ans_1_try,
+          "Points:", right_ans_1_try * 100 + (right_ans-right_ans_1_try) * 20 - wrong_ans * 50,
           "\tRemain:", remain_words)
     print()
 
@@ -43,6 +46,13 @@ words = []
 for word in dict_file:
     words.append(Word(word[0], word[1], word[2], word[0].replace(" ", "_") + "___" + word[1] + ".mp3"))
 
+if NUMBER_OF_WORDS != -1:
+    words_rnd = []
+    for i in range(NUMBER_OF_WORDS):
+        words_rnd.append(words.pop(random.randint(0, len(words) - 1)))
+    words = words_rnd
+
+
 system("cls")
 print("press Enter to start...")
 input()
@@ -55,14 +65,14 @@ done_words = []
 
 inp = ""
 go_next = True
-after_repeat_audio = False
+#after_repeat_audio = False
 while (inp != "!exit") and (remain_words > 0):
     print_statictics()
     if go_next:
         word_num = random.randint(0,remain_words-1)
         curr_word = words[word_num]
-    if after_repeat_audio:
-        go_next = True
+#    if after_repeat_audio:
+#        go_next = True
     if PLAY_BEFORE_INPUT:
         curr_word.play()
     print(curr_word.meaning)
@@ -70,30 +80,32 @@ while (inp != "!exit") and (remain_words > 0):
     inp = input()    
     curr_word.play()
     if inp == curr_word.pinyin:
-        right_ans += 1
         print("Correct!")
         if go_next == True:
-            right_ans_1_try += 1
+            right_ans += 1
+            if curr_word.wrong_ans == 0:
+                right_ans_1_try += 1
             done_words.append(words.pop(word_num))
             remain_words -= 1
         else:
             go_next = True
-    elif inp == "":#!repeat":
+    elif inp == "!": # word for repeat audio
         go_next = False
-        after_repeat_audio = NOT_PENALIZE_AFTER_REPEAT_AUDIO
+#        after_repeat_audio = NOT_PENALIZE_AFTER_REPEAT_AUDIO
         continue
     elif (inp == "!next") or (inp == "!stop"):
         go_next = True
     else:
         wrong_ans += 1
         curr_word.wrong_ans += 1
-        curr_word.wrong_ans_words.append(inp)
+        if inp != "":
+            curr_word.wrong_ans_words.append(inp)
         print("You are wrong! Correct is: " + curr_word.pinyin)
         go_next = False        
     input()
 
 done_words.sort(key=lambda word : -word.wrong_ans)
-with open ("game_statistics.txt", "w") as f:
+with open ("game_statistics.txt", "w", encoding="UTF-8") as f:
     f.write("word\twrong_answers\terrors\n")
     for word in done_words:
-        f.write(word.word + "\t" + str(word.wrong_ans) + "\t" + str(word.wrong_ans_words) + "\n")
+        f.write(word.pinyin + "\t" + word.characters + "\t" + str(word.wrong_ans) + "\t" + str(word.wrong_ans_words) + "\t" + word.meaning + "\n")
