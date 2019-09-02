@@ -1,8 +1,9 @@
 AUDIO_FOLDER = "./HSK1_words/"
 DICT_FILE = "HSK1_dict.txt"
-PLAY_BEFORE_INPUT = True
+PLAY_BEFORE_TRUE_ANS = False
 NUMBER_OF_WORDS = -1
 #NOT_PENALIZE_AFTER_REPEAT_AUDIO = True
+SHOW_ZI_MEANING = False
 
 from pygame import mixer # Load the required library
 from os import system
@@ -73,9 +74,10 @@ while (inp != "!exit") and (remain_words > 0):
         curr_word = words[word_num]
 #    if after_repeat_audio:
 #        go_next = True
-    if PLAY_BEFORE_INPUT:
+    if PLAY_BEFORE_TRUE_ANS:
         curr_word.play()
-    print(curr_word.meaning)
+    if SHOW_ZI_MEANING:
+        print(curr_word.meaning)
     print(curr_word.characters)
     inp = input()    
     curr_word.play()
@@ -102,6 +104,8 @@ while (inp != "!exit") and (remain_words > 0):
             curr_word.wrong_ans_words.append(inp)
         print("You are wrong! Correct is: " + curr_word.pinyin)
         go_next = False        
+    if not SHOW_ZI_MEANING:
+        print(curr_word.meaning)
     input()
 
 done_words.sort(key=lambda word : -word.wrong_ans)
