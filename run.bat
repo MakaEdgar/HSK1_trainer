@@ -1,1 +1,1 @@
-python hsk1_trainer.py
+python memetrainer.py
