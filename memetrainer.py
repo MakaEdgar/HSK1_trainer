@@ -181,9 +181,9 @@ def train_word(word):
         word.errors_all_time += 1
         
     if word.errors_curr == 0:
-        word.quality_percent = (100 * (round((word.runs_all_time-word.errors_all_time) * word.quality_percent) + 1)) // (word.runs_all_time)
+        word.quality_percent = (100 * (round((word.runs_all_time-1 - word.errors_all_time) * word.quality_percent/100) + 1)) // (word.runs_all_time)
     else:
-        word.quality_percent = (100 * (round((word.runs_all_time-word.errors_all_time) * word.quality_percent)    )) // (word.runs_all_time)
+        word.quality_percent = (100 * (round((word.runs_all_time-1 - word.errors_all_time) * word.quality_percent/100)    )) // (word.runs_all_time)
     
     
     train_word_result = {
